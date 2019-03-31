@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initview() {
+        //initialising view
         toolbar = findViewById(R.id.toolbar);
         userlistview = findViewById(R.id.userlist);
         progressBar = findViewById(R.id.progressbar);
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setData()
     {
+        //observing userdata on change to update ui (recycleview)
         final UserListViewModel viewModel = ViewModelProviders.of(this).get(UserListViewModel.class);
         viewModel.getUserListObservable().observe(this, new Observer<UserResponseJson>() {
             @Override
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initToolbar()
     {
+        //setting toolbar
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -68,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initRecyclerView()
     {
+        //initialising recycleview
         progressBar.setVisibility(View.VISIBLE);
         SnapHelper snapper = new SnapHelper();
         userListAdapter = new UserListAdapter(getApplicationContext(), new ArrayList<User>());

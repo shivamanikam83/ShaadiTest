@@ -49,13 +49,18 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
         return new UserViewHolder(view);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull final UserViewHolder userViewHolder, final int i) {
+        //on bind view to data
         final User user = userList.get(i);
 
         if(user!=null)
         {
+            //setting profile name
             userViewHolder.profile_name.setText(user.getName().getTitle() + " " + user.getName().getFirst() + " " + user.getName().getLast());
+
+            //setting profile image
             Glide.with(context)
                     .load(user.getPicture().getMedium())
                     .listener(new RequestListener<Drawable>() {
@@ -70,7 +75,11 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
                         }
                     })
                     .into(userViewHolder.profile_image);
+
+
             String desc_text = user.getDob().getAge() + " yrs, \n"+user.getLocation().getStreet()+", "+user.getLocation().getCity()+", "+user.getLocation().getState();
+
+            //changing text to camelcase from lowcase
             String[] strArray = desc_text.split(" ");
             StringBuilder builder = new StringBuilder();
             for (String s : strArray) {
@@ -78,8 +87,10 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
                 builder.append(cap + " ");
             }
 
+            //setting profile description
             userViewHolder.profile_desc.setText(builder.toString());
 
+            //setting connect & decline btn with onclicklistener to remove the item from the list
             userViewHolder.connectBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -132,6 +143,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
     }
 
     public class UserViewHolder extends RecyclerView.ViewHolder{
+        //initialising view
         TextView profile_name, profile_desc;
         CircleImageView profile_image;
         Button cancelBtn, connectBtn;

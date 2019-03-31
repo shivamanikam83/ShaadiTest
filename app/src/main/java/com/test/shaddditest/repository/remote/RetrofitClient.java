@@ -21,6 +21,7 @@ public class RetrofitClient {
     private Retrofit retrofit;
 
     private RetrofitClient(){
+        //creating retrofit instance
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -28,6 +29,7 @@ public class RetrofitClient {
     }
 
     public static synchronized RetrofitClient getInstance(){
+        //creating retrofitclient for remote access to api
         if(mInstance == null){
             mInstance = new RetrofitClient();
         }
@@ -39,17 +41,22 @@ public class RetrofitClient {
     }
 
 
+    //getUsers called initially while setting userviewmodel
     public MutableLiveData<UserResponseJson> getUsers() {
+
         final MutableLiveData<UserResponseJson> data = new MutableLiveData<>();
 
-        getApi().getUsers().enqueue(new Callback<UserResponseJson>() {
+        //fetching data from the api
+        getApi().getUsers(10).enqueue(new Callback<UserResponseJson>() {
             @Override
             public void onResponse(Call<UserResponseJson> call, Response<UserResponseJson> response) {
+                //on success
                 data.setValue(response.body());
             }
 
             @Override
             public void onFailure(Call<UserResponseJson> call, Throwable t) {
+                //on error
                 Log.d("ViewMode", ""+t.toString());
             }
         });
